@@ -23,7 +23,6 @@ export default StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    bottom: 0,
     backgroundColor: 'transparent',
     overflow: 'hidden',
   },
