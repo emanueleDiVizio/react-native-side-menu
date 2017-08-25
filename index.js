@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react';
 import {
   PanResponder,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
+import {isIos} from "../../../../app/util/utils";
 
 type WindowDimensions = { width: number, height: number };
 
@@ -91,7 +91,7 @@ export default class SideMenu extends React.Component {
 
     this.state = {
       width: deviceScreen.width,
-      height: deviceScreen.height,
+      height: deviceScreen.height - (isIos() ? 0 : 24),
       openOffsetMenuPercentage,
       openMenuOffset: deviceScreen.width * openOffsetMenuPercentage,
       hiddenMenuOffsetPercentage,
@@ -118,6 +118,7 @@ export default class SideMenu extends React.Component {
 
   onLayoutChange(e: Event) {
     const { width, height } = e.nativeEvent.layout;
+    console.log(this.state.height - height)
     const openMenuOffset = width * this.state.openOffsetMenuPercentage;
     const hiddenMenuOffset = width * this.state.hiddenMenuOffsetPercentage;
     this.setState({ width, height, openMenuOffset, hiddenMenuOffset });
