@@ -9,7 +9,11 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import {isIos} from "../../../../app/util/utils";
+import {Platform} from 'react-native'
+
+function isIos() {
+    return (Platform.OS === 'ios')
+}
 
 type WindowDimensions = { width: number, height: number };
 
