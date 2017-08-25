@@ -14,7 +14,6 @@ import {Platform} from 'react-native'
 function isIos() {
     return (Platform.OS === 'ios')
 }
-
 type WindowDimensions = { width: number, height: number };
 
 type Props = {
@@ -31,7 +30,8 @@ type Props = {
   onStartShouldSetResponderCapture: Function,
   isOpen: bool,
   bounceBackOnOverdraw: bool,
-  autoClosing: bool
+  autoClosing: bool,
+    isEvent: bool
 };
 
 type Event = {
@@ -92,10 +92,9 @@ export default class SideMenu extends React.Component {
     this.onPanResponderMove = this.handlePanResponderMove.bind(this);
     this.onPanResponderRelease = this.handlePanResponderEnd.bind(this);
     this.onPanResponderTerminate = this.handlePanResponderEnd.bind(this);
-
     this.state = {
       width: deviceScreen.width,
-      height: deviceScreen.height - (isIos() ? 0 : 24),
+      height: deviceScreen.height - (isIos() ? 0 : this.props.isEvent ? 0 : 24),
       openOffsetMenuPercentage,
       openMenuOffset: deviceScreen.width * openOffsetMenuPercentage,
       hiddenMenuOffsetPercentage,
@@ -122,7 +121,6 @@ export default class SideMenu extends React.Component {
 
   onLayoutChange(e: Event) {
     const { width, height } = e.nativeEvent.layout;
-    console.log(this.state.height - height)
     const openMenuOffset = width * this.state.openOffsetMenuPercentage;
     const hiddenMenuOffset = width * this.state.hiddenMenuOffsetPercentage;
     this.setState({ width, height, openMenuOffset, hiddenMenuOffset });
@@ -275,6 +273,7 @@ SideMenu.propTypes = {
   isOpen: PropTypes.bool,
   bounceBackOnOverdraw: PropTypes.bool,
   autoClosing: PropTypes.bool,
+    isEvent: PropTypes.bool
 };
 
 SideMenu.defaultProps = {
@@ -302,4 +301,5 @@ SideMenu.defaultProps = {
   isOpen: false,
   bounceBackOnOverdraw: true,
   autoClosing: true,
+    isEvent: false
 };
